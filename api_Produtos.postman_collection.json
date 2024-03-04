@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "0f2efbe9-d77a-4db4-ae55-abd4893dbf19",
+		"name": "api_Produtos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "23202572"
+	},
+	"item": [
+		{
+			"name": "Busca Produtos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:3000/buscaProdutos"
+			},
+			"response": []
+		},
+		{
+			"name": "Busca Produtos Desconto",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://127.0.0.1:3000/buscaProdutosDescontos"
+			},
+			"response": []
+		},
+		{
+			"name": "Exercicio 2B - Inseri Produtos",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigo\": 1,\r\n    \"nome\": \"DVD\",\r\n    \"valor\": 15\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/exercicio2B"
+			},
+			"response": []
+		},
+		{
+			"name": "Exercicio 2C - inseri Produto Desconto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigo\": 1,\r\n    \"quantidade\": 20,\r\n    \"valor\":14\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/exercicio2C"
+			},
+			"response": []
+		},
+		{
+			"name": "Exercicio 1 - quantidade Produto e Desconto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"quantidade\": 20\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/exercicio1"
+			},
+			"response": []
+		},
+		{
+			"name": "Exercicio 2D - Iserir DVD",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": "http://127.0.0.1:3000/exercicio2D"
+			},
+			"response": []
+		},
+		{
+			"name": "Exercicio 2E - BuscarDesconto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"codigo\": 2,\r\n    \"quantidadeVenda\": 10\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:3000/exercicio2E"
+			},
+			"response": []
+		}
+	]
+}
