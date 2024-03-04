@@ -18,13 +18,13 @@ database.get('/buscaProdutosDescontos', async (req, res) => {
 })
 
 database.post('/exercicio1', async (req, res) => {
-    const valorProduto = await ValorTotalDaVenda(req.body.quantidade);
-    res.send({valorProduto});
+    const valorProduto = ValorTotalDaVendaDVD(req.body.quantidade);
+    res.send({ valorProduto });
 })
 
 database.post('/exercicio2B', async (req, res) => {
     const produtos = await inserirProduto(req.body.codigo, req.body.nome, req.body.valor);
-    res.send({produtos});
+    res.send({ produtos });
 })
 
 database.post('/exercicio2C', async (req, res) => {
@@ -38,14 +38,15 @@ database.post('/exercicio2D', async (req, res) => {
 })
 
 database.post('/exercicio2E', async (req, res) => {
-    const valorVenda = await calcularValorVenda(req.body.codigo, req.body.quantidadeVenda);
-    res.send({valorVenda});
+    const valorVenda = await calculaValorVenda(req.body.codigo, req.body.quantidadeVenda);
+    res.send({ valorVenda });
 })
 
-function ValorTotalDaVenda(quantidade) {
-    const precoBase = 1.10;
+function ValorTotalDaVendaDVD(valor, quantidade) {
+    const precoBase = valor;
+
     const limiteDescontoMedio = 10;
-    const precoDescontoMedio = precoBase - 0.1;
+    const precoDescontoMedio = precoBase * 0.0909;
     const limiteDescontoAlto = 20;
     const precoDescontoAlto = precoBase - 0.2;
 
@@ -55,10 +56,10 @@ function ValorTotalDaVenda(quantidade) {
         return (limiteDescontoMedio * precoBase) + (quantidade - limiteDescontoMedio) * precoDescontoMedio;
     } else {
         return (limiteDescontoMedio * precoBase) +
-               (limiteDescontoAlto - limiteDescontoMedio) * precoDescontoMedio +
-               (quantidade - limiteDescontoAlto) * precoDescontoAlto;
+            (limiteDescontoAlto - limiteDescontoMedio) * precoDescontoMedio +
+            (quantidade - limiteDescontoAlto) * precoDescontoAlto;
     }
-    
+
 }
 
 async function inserirProduto(codigo, nome, valor) {
@@ -108,21 +109,21 @@ async function inserirDadosVendaDVD() {
 }
 
 
-async function calcularValorVenda(codigoProduto, quantidadeVendida) {
+async function calculaValorVenda(codigoProduto, quantidadeVendida) {
     const descontos = await ProdutoDesconto.findAll({
         where: { codigo: codigoProduto }
     });
 
     let valorTotal = 0;
-    let quantidade = quantidadeVendida;
+    let quantidadeRestante = quantidadeVendida;
 
-
-    for (let i = descontos.length - 1; i >= 0; i--) {
-        if (quantidade > descontos[i].quantidade) {
-            valorTotal += (quantidade - descontos[i].quantidade) * descontos[i].valor;
-            quantidade = descontos[i].quantidade;
+    descontos.reverse().forEach(desconto => {
+        if (quantidadeRestante > desconto.quantidade) {
+            const quantidadeComDesconto = quantidadeRestante - desconto.quantidade;
+            valorTotal += quantidadeComDesconto * desconto.valor;
+            quantidadeRestante = desconto.quantidade;
         }
-    }
+    });
 
     return valorTotal;
 }
